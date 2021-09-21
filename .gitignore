@@ -30,6 +30,7 @@ hs_err_pid*
 *.iws
 out
 .DS_Store
+.mvn
 
 # eclipse
 .classpath
