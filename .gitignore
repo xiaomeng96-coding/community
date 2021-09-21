@@ -31,6 +31,10 @@ hs_err_pid*
 out
 .DS_Store
 .mvn
+.mvn/wrapper
+HELP.md
+mvnw
+mvnw.cmd
 
 # eclipse
 .classpath
