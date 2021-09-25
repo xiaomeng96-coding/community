@@ -3,7 +3,7 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.entity.UserService;
+import com.nowcoder.community.service.UserService;
 import com.nowcoder.community.service.DiscussPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
