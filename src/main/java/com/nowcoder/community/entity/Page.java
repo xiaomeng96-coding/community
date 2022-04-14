@@ -8,7 +8,7 @@ public class Page {
 
     private int current = 1;
     private int limit = 10;
-    private int rows;
+    private int rowCounts;
     private String path;
 
     public int getCurrent() {
@@ -16,9 +16,7 @@ public class Page {
     }
 
     public void setCurrent(int current) {
-        if(current >= 1) {
-            this.current = current;
-        }
+        this.current = Math.max(1, current);
     }
 
     public int getLimit() {
@@ -31,14 +29,12 @@ public class Page {
         }
     }
 
-    public long getRows() {
-        return rows;
+    public long getRowCounts() {
+        return rowCounts;
     }
 
-    public void setRows(int rows) {
-        if(rows >= 0) {
-            this.rows = rows;
-        }
+    public void setRowCounts(int rowCounts) {
+        this.rowCounts = Math.max(0, rowCounts);
     }
 
     public String getPath() {
@@ -54,21 +50,14 @@ public class Page {
     }
 
     public int getTotal() {
-        if(rows % limit == 0) {
-            return rows/limit;
-        }else {
-            return rows/limit + 1;
-        }
+        return (int)Math.ceil(rowCounts/(double)limit);
     }
 
     public int getFrom() {
-        int from = current - 2;
-        return Math.max(from, 1);
+        return Math.max(current - 2, 1);
     }
 
     public int getTo() {
-        int to = current + 2;
-        int total = getTotal();
-        return Math.min(to, total);
+        return Math.min(current + 2, getTotal());
     }
 }
