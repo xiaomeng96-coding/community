@@ -149,7 +149,7 @@ public class UserService implements CommunityConstant {
             map.put("usernameMsg", "该账号未激活！");
             return map;
         }
-        password = CommunityUtil.md5(String.format(password, user.getSalt()));
+        password = CommunityUtil.md5(password + user.getSalt());
         if (!user.getPassword().equals(password)) {
             map.put("passwordMsg", "密码不正确！");
             return map;
