@@ -73,8 +73,8 @@ public class MapperTest {
 
     @Test
     public void testUpdateUserPassword() {
-        String password = CommunityUtil.md5("aaa167f9");
-        userMapper.updatePassword(111, password);
+        String password = CommunityUtil.md5("1234564bd27");
+        userMapper.updatePassword(157, password);
     }
 
     @Test
