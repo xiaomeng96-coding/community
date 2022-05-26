@@ -37,6 +37,6 @@ public class ServiceLogAspect {
         String current = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String target = joinPoint.getSignature().getDeclaringTypeName() +
                 "." + joinPoint.getSignature().getName();
-        logger.info(String.format("用户[%s], 在[%s], 访问了[%s]", ip, current, target));
+        logger.debug(String.format("用户[%s], 在[%s], 访问了[%s]", ip, current, target));
     }
 }
