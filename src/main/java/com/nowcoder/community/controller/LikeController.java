@@ -1,7 +1,10 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.LikeService;
+import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,7 @@ import java.util.Map;
  * @since : 2022/5/26
  */
 @Controller
-public class LikeController {
+public class LikeController implements CommunityConstant {
 
     @Autowired
     private LikeService likeService;
@@ -26,16 +29,34 @@ public class LikeController {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
-    public String like(int entityType, int entityId, int entityUserId) {
+    public String like(int entityType, int entityId, int entityUserId, int postId) {
         User user = hostHolder.getUser();
         likeService.like(user.getId(), entityType, entityId, entityUserId);
         long likeCount = likeService.findEntityLikeCount(entityType, entityId);
         int likeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
-        Map<String, Object> map = new HashMap<>();
-        map.put("likeCount", likeCount);
-        map.put("likeStatus", likeStatus);
+        Map<String, Object> map = new HashMap<String, Object>(){{
+            put("likeCount", likeCount);
+            put("likeStatus", likeStatus);
+        }};
+
+        if (likeStatus == 1) {
+            Event event = new Event();
+            event.setTopic(TOPIC_LIKE);
+            event.setUserId(hostHolder.getUser().getId());
+            event.setEntityType(entityType);
+            event.setEntityId(entityId);
+            event.setEntityUserId(entityUserId);
+            event.setData(new HashMap<String, Object>(){{
+                put("postId", postId);
+            }});
+            eventProducer.fireEvent(event);
+        }
+
         return CommunityUtil.convert2JSONString(0, null, map);
     }
 

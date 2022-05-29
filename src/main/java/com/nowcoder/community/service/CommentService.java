@@ -51,4 +51,8 @@ public class CommentService implements CommunityConstant {
                     commentMapper.selectCountByEntity(comment.getEntityType(), comment.getEntityId()));
         }
     }
+
+    public Comment findCommentById (int id) {
+        return commentMapper.selectCommentById(id);
+    }
 }
