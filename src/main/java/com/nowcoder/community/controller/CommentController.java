@@ -60,6 +60,15 @@ public class CommentController implements CommunityConstant {
             event.setEntityUserId(target.getUserId());
         }
         eventProducer.fireEvent(event);
+
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            Event commentEvent = new Event();
+            commentEvent.setEntityId(discussPostId);
+            commentEvent.setTopic(TOPIC_PUBLISH);
+            commentEvent.setUserId(comment.getUserId());
+            commentEvent.setEntityType(ENTITY_TYPE_POST);
+            eventProducer.fireEvent(event);
+        }
         return "redirect:/discuss/detail/" + discussPostId;
     }
 }

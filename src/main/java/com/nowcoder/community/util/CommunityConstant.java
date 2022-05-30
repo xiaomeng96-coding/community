@@ -21,4 +21,6 @@ public interface CommunityConstant {
     String TOPIC_FOLLOW = "follow";
 
     int SYSTEM_USER_ID = 1;
+
+    String TOPIC_PUBLISH = "publish";
 }
